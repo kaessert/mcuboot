@@ -1,0 +1,34 @@
+/ {
+	chosen {
+		zephyr,code-partition = &boot_partition;
+	};
+};
+
+&flash0 {
+    /delete-node/ partitions;
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+        boot_partition: partition@0 {
+            label = "mcuboot";
+            reg = <0x00000000 0x5000>;     /* 20KB */
+        };
+        slot0_partition: partition@5000 {
+            label = "image-0";
+            reg = <0x00005000 0x39000>;    /* 228KB */
+        };
+        slot1_partition: partition@3e000 {
+            label = "image-1";
+            reg = <0x0003e000 0x39000>;    /* 228KB */
+        };
+        scratch_partition: partition@77000 {
+            label = "image-scratch";
+            reg = <0x00077000 0x4000>;     /* 16KB */
+        };
+        storage_partition: partition@7b000 {
+            label = "storage";
+            reg = <0x0007b000 0x3000>;     /* 12KB */
+        };
+    };
+};
